@@ -1,6 +1,7 @@
 import React from 'react'
 import { Map as LeafletMap, TileLayer } from 'react-leaflet';
 import HeatMapLayer from 'react-leaflet-heatmap-layer';
+import Loader from './Loader.js';
 
 class IPMap extends React.Component {
   constructor(props) {
@@ -8,16 +9,23 @@ class IPMap extends React.Component {
 
     this.state = {
       ipcoords: null,
+      loading: true,
     }
   }
 
   componentDidMount() {
     fetch('http://localhost:8000/ipcoords')
       .then(response => response.json())
-      .then(ipcoords => this.setState({ ipcoords }));
+      .then(ipcoords => this.setState({
+        ipcoords: ipcoords,
+        loading: false
+      }));
   }
 
   render() {
+    if ( this.state.loading ) {
+      return <Loader />;
+    }
     return (
       <LeafletMap
         style={{height: "100vh"}}
@@ -38,7 +46,8 @@ class IPMap extends React.Component {
           points={this.state.ipcoords}
           longitudeExtractor={m => m[1]}
           latitudeExtractor={m => m[0]}
-          intensityExtractor={m => parseFloat(m[2])} />
+          intensityExtractor={m => parseFloat(m[2])}
+        />
         <TileLayer
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />

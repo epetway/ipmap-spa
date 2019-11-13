@@ -3,13 +3,11 @@ import './App.css';
 import IPMap from './Map.js';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <IPMap />
-    </div>
-  );
+    return (
+        <div className="App">
+            <IPMap />
+        </div>
+    );
 }
 
 export default App;
