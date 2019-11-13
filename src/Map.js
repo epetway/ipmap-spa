@@ -1,14 +1,27 @@
 import React from 'react'
 import { Map as LeafletMap, TileLayer } from 'react-leaflet';
 import HeatMapLayer from 'react-leaflet-heatmap-layer';
-import { ipcoords } from './ipcoords.js';
 
 class IPMap extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ipcoords: null,
+    }
+  }
+
+  componentDidMount() {
+    fetch('http://localhost:8000/ipcoords')
+      .then(response => response.json())
+      .then(ipcoords => this.setState({ ipcoords }));
+  }
+
   render() {
     return (
       <LeafletMap
         style={{height: "100vh"}}
-        center={[50, 10]}
+        center={[35.7721, -78.6386]}
         zoom={6}
         maxZoom={10}
         attributionControl={true}
@@ -22,7 +35,7 @@ class IPMap extends React.Component {
         <HeatMapLayer
           fitBoundsOnLoad
           fitBoundsOnUpdate
-          points={ipcoords}
+          points={this.state.ipcoords}
           longitudeExtractor={m => m[1]}
           latitudeExtractor={m => m[0]}
           intensityExtractor={m => parseFloat(m[2])} />
