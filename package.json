@@ -10,6 +10,10 @@
     "react-leaflet-heatmap-layer": "^2.0.0",
     "react-scripts": "3.2.0"
   },
+   "engines": {
+    "npm": "6.10.3",
+    "node": "12.10.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
