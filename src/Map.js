@@ -14,7 +14,7 @@ class IPMap extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:8000/ipcoords')
+    fetch('https://ipmap.herokuapp.com/ipcoords')
       .then(response => response.json())
       .then(ipcoords => this.setState({
         ipcoords: ipcoords,
